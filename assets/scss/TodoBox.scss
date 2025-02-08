@@ -1,0 +1,128 @@
+.todobar {
+    position: relative;
+    height: 50px;
+    border-radius: 20px;
+    background-color: #D3ECCD;
+    box-shadow: 3px 3px 3px 0 rgba($color: #bdd6ff, $alpha: 0.3);
+    display: grid;
+    z-index: 10;
+}
+
+.todobar-content{
+    width: 100%;
+    display: flex;
+    justify-content: space-between; /* アイコンを右に寄せる */
+    align-items: center; /* アイコンとテキストを縦中央に配置 */
+}
+
+.icons {
+    display: flex;
+    gap: 10px; /* アイコン間に隙間を作る */
+    margin-left: auto; /* アイコンを右側に押し付ける */
+    margin-right: 10px;
+}
+
+.triangle {
+    background-color: #AFB2AA;
+    height: calc(tan(60deg) * 40px / 2);
+    width: 30px;
+    margin-left: 30px;
+    margin-right: 10px;
+    display: inline-block;
+    &__right {
+        clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+    &__down {
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+}
+
+.right-triangle {
+    background-color: #AFB2AA;
+    height: calc(tan(60deg) * 40px / 2);
+    width: 30px;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    margin-left: 30px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.title {
+    font-size: 25px;
+    margin-left: 5px;
+    width: 50%;
+    font-weight: bold;
+}
+
+.dead-line {
+    font-size: 20px;
+    margin-left: auto;
+}
+
+.description {
+    border-radius: 5px;
+    background-color: #ECF3E0;
+    box-shadow: 3px 3px 3px 0 rgba($color: #bdd6ff, $alpha: 0.3);
+    font-size: 15px;
+    margin-top: -20px;
+    padding-top: 30px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    z-index: 1;
+}
+
+.card {
+    margin: 20px;
+    border: 2px solid;
+    border-radius: 8px;
+    border-color: #DDDEDC;
+    background-color: #E7EBE5;
+    display: block;
+    flex-direction: row;
+    .title{
+        margin: 20px;
+        width: 90%;
+        font-size: 25px;
+    }
+    .description{
+        margin: 20px;
+        width: 90%;
+        font-size: 15px;
+        line-height: 1.5em;
+        height: 8em;
+    }
+    .deadLine{
+        margin: 10px;
+        width: 90%;
+        font-size: 20px;
+        line-height: 1.2em;
+    }
+}
+
+.input-area {
+    display: flex;
+    margin: 10px 5%;
+}
+
+.form-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end; /* ボタンを右寄せ */
+    margin-right: 30px;
+
+}
+
+.editIcon {
+    align-items: flex-end;
+    cursor: pointer;
+}
+
+.deleteIcon {
+    align-items: flex-end;
+    cursor: pointer;
+}
