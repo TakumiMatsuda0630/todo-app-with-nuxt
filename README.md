@@ -1,6 +1,14 @@
-# Nuxt Minimal Starter
+# Todo リスト 管理アプリ
+本アプリケーションは、リポジトリオーナーの勉強用に開発したTodoアプリケーションです。  
+本アプリケーションは以下のライブラリを用いて開発しています。  
+* Nuxt: 3.15.4
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+本アプリケーションは、Nuxtを用いたアプリケーション開発を試すことを目的に実装しています。  
+そのため、必要最低限の機能のみ備えています。
+
+## 注意事項
+本アプリケーションでは、Todoリストの永続先としてローカルストレージを使用しています。  
+そのため、Todoリストを作成後にブラウザのウィンドウを閉じると作成したTodoリストは削除されます。
 
 ## Setup
 
@@ -8,16 +16,7 @@ Make sure to install dependencies:
 
 ```bash
 # npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+npm ci
 ```
 
 ## Development Server
@@ -27,15 +26,6 @@ Start the development server on `http://localhost:3000`:
 ```bash
 # npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
 ## Production
@@ -45,15 +35,6 @@ Build the application for production:
 ```bash
 # npm
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
 Locally preview production build:
@@ -61,15 +42,5 @@ Locally preview production build:
 ```bash
 # npm
 npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
