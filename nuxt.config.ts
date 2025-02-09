@@ -4,4 +4,9 @@ export default defineNuxtConfig({
   css: ["@/assets/main.scss"],
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
+  nitro: {
+    firebase: {
+      gen: 2
+    }
+  },
 })
