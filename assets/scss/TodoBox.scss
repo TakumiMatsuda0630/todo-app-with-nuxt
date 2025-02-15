@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 .todobar {
     position: relative;
     height: 50px;
@@ -52,11 +54,17 @@
     margin-left: 5px;
     width: 50%;
     font-weight: bold;
+    @media screen and (max-width: $smartphone_screen_max_width) {
+        font-size: 15px;
+    }
 }
 
 .dead-line {
     font-size: 20px;
     margin-left: auto;
+    @media screen and (max-width: $smartphone_screen_max_width) {
+        display: none;
+    }
 }
 
 .description {
