@@ -56,7 +56,7 @@ const newTodo: Todo = {
     title: '',
     description: '',
     deadLine: '',
-    status: 0,
+    status: '0',
 }
 
 function clickSaveButton(){

@@ -36,6 +36,7 @@ const deleteTodoUseCase = new DeleteTodo();
 
 const todos = ref([] as Todo[]);
 onMounted(() => {
+    // ローカルストレージからTODOデータを取得するため、DOMのマウント後にGetする。
     todos.value = getTodosUseCase.getTodos();
 });
 

@@ -3,5 +3,5 @@ export type Todo = {
     title: string,
     description: string,
     deadLine: string,
-    status: number,
+    status: string,
 }

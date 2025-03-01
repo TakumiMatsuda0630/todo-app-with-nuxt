@@ -1,7 +1,9 @@
 .normal-button{
     padding: 3px 10px;
-    border: #7866EE;
-    background-color: #3F64F9;
+    border:groove;
+    border-color: #3315f5;
+    border-width: 5px;
+    background-color: #5777f6;
     border-radius: 5px;
     font-size: 22px;
     color: white;
@@ -12,11 +14,13 @@
 
 .sub-button{
     padding: 3px 10px;
-    border: #4B4B4B;
-    background-color: #E7E7E7;
+    border:grooves;
+    border-color: #171616;
+    border-width: 5px;
+    background-color: #5d5c5c;
     border-radius: 5px;
     font-size: 22px;
-    color: gray;
+    color: rgb(210, 208, 208);
     font: bold;
     text-align: center;
     cursor: pointer;

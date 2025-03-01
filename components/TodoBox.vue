@@ -1,5 +1,8 @@
 <template>
-    <div class="todobar">
+    <div 
+        class="todobar"
+        :class="isCompleted ? 'todobar__terminated' : (isExpired ? 'todobar__expired' : 'todobar__normal')"
+    >
         <div class="todobar-content">
             <span 
                 v-if="isDisplayDescription"
@@ -36,6 +39,7 @@
     <div
         v-if="isDisplayDescription"
         class="description"
+        :class="isCompleted ? 'description__terminated' : (isExpired ? 'description__expired' : 'description__normal')"
     >
         {{ props.todo.description }}
     </div>
@@ -61,6 +65,22 @@ const displayTitle: ComputedRef<string> = computed(() => {
 
 const displayDeadLine: ComputedRef<string> = computed(() => {
     return props.todo.deadLine.replaceAll('-', '/');
+});
+const isExpired: ComputedRef<boolean> = computed(() => {
+    // TODO の期限をYYYYMMDD形式で取得
+    const deadLine = props.todo.deadLine.replaceAll('-', '');
+    // 今日の日付をYYYYMMDD形式で取得
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const todayString = `${year}${month}${day}`;
+
+    return (Number(deadLine) - Number ((todayString))) < 0;
+});
+
+const isCompleted: ComputedRef<boolean> = computed(() => {
+    return props.todo.status === '1';
 });
 
 const isDisplayDescription: Ref<boolean> = ref(false);

@@ -26,8 +26,16 @@
                 v-model="editTodo.deadLine"
             >
         </div>
-        <div class="buttons">
+        <div class="input-area">
+            <label>ステータス:</label>
+            <select v-model="editTodo.status">
+                <option value="0">未完了</option>
+                <option value="1">完了</option>
+            </select>
+        </div>
+        <div class="buttons mb-10">
             <normal-button
+                class="mr-10"
                 buttonName="Save"
                 @click="saveTodo"
             >
@@ -58,7 +66,7 @@ let editTodo: Todo = {
     title: '',
     description: '',
     deadLine: '',
-    status: 0,
+    status: '0',
 };
 
 onMounted(() => {

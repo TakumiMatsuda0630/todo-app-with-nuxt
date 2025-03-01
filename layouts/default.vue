@@ -10,9 +10,9 @@
     <main>
       <slot />
     </main>
-    <footer>
+    <!-- <footer>
       <Footer />
-    </footer>
+    </footer> -->
   </div>
 </template>
 
