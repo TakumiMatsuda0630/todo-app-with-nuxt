@@ -4,6 +4,17 @@
 @use './scss/Button.scss';
 @use './scss/Header.scss';
 @use './scss/AllTasks.scss';
+@import"https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;1,700&display=swap";
+@import"https://fonts.googleapis.com/icon?family=Material+Icons";
+
+// margins
+.m-10 {
+    margin: 10px;
+}
+
+.m-20 {
+    margin: 20px;
+}
 
 .mr-3 {
     margin-right: 3px;
@@ -51,4 +62,12 @@
 
 .mb-10 {
     margin-bottom: 10px;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
 }

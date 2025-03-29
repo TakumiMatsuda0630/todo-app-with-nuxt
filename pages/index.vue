@@ -6,19 +6,49 @@
             class="create-button"
             @click="addTodo"
         />
-        <div
-            v-for="(todo) in todos"
-            :key="todo.id"
-            class="todo-box"
+        <VaDataTable
+            :items="todos" 
+            :columns="columns"
         >
-            <todo-box
-                :todo=todo
-                @save="saveTodo"
-                @edit="editTodo"
-                @delete="deleteTodo"
-            >
-            </todo-box>
-        </div>
+            <template #header(title)="{ key }">
+                <span >{{ key }}</span>
+            </template>
+            <template #cell(title)="{ value }">
+                <b>{{ value }}</b>
+            </template>
+            <template #header(status)="{ label }">
+                <VaChip size="small">
+                    {{ label }}
+                </VaChip>
+            </template>
+            <template #cell(status)="{ value }">
+                <VaBadge
+                    v-if="isCompleted(value)"
+                    text="完了"
+                    color="secondary"
+                    class="mr-2"
+                />
+                <VaBadge
+                    v-else
+                    text="未完了"
+                    color="success"
+                    class="mr-2"
+                />
+            </template>
+            <template #cell(id)="{ value }">
+                <VaButton
+                    preset="plain"
+                    icon="edit"
+                    @click="editTodoById(value)"
+                />
+                <VaButton
+                    preset="plain"
+                    icon="delete"
+                    class="ml-3"
+                    @click="deleteTodoById(value)"
+                />
+            </template>
+        </VaDataTable>
     </div>
 </template>
 
@@ -28,8 +58,15 @@ import { CirclePlus } from 'lucide-vue-next';
 import { useRouter } from 'vue-router';
 import { GetTodos } from '~/src/UseCase/GetTodos'
 import { DeleteTodo } from '~/src/UseCase/DeleteTodo'
+import { useUtils } from '~/composables/Util'
 
-const title = 'All Tasks';
+const columns: Array<{key: string, label?: string, sortable: boolean}> = [
+    { key: 'title', label: 'タイトル', sortable: true },
+    { key: 'description', label: '詳細', sortable: true },
+    { key: 'deadLine', label: '期限', sortable: true },
+    { key: 'status', label: 'ステータス', sortable: true },
+    { key: 'id', label: ' ', sortable: false },
+];
 
 const getTodosUseCase = new GetTodos();
 const deleteTodoUseCase = new DeleteTodo();
@@ -46,28 +83,24 @@ const addTodo = () => {
     router.push('/create');
 };
 
-function saveTodo (updatedTodo: Todo){
-    const updatedTodos = todos.value.map((todo: Todo) => {
-        if(todo.id === updatedTodo.id) return updatedTodo;
-        return todo;
-    });
-
-    localStorage.setItem('todos', JSON.stringify(updatedTodos));
+function editTodoById(id: string) {
+    router.push('/edit/' + id);
 }
 
-function editTodo(todo: Todo) {
-    const id: string = String(todo.id);
-    router.push('/edit/${id}');
-}
+function deleteTodoById(id: string){
+    const deletedTodo = todos.value.find(todo => todo.id === id);
+    if (!deletedTodo) return;
 
-function deleteTodo(deletedTodo: Todo){
     deleteTodoUseCase.deleteTodo(deletedTodo);
     todos.value = getTodosUseCase.getTodos();
+}
+
+const STASUS_DONE = '1';
+const isCompleted = (status: string) => {
+    return status === STASUS_DONE;
 }
 </script>
 
 <style>
-body {
-    margin: 0px;
-}
+
 </style>
