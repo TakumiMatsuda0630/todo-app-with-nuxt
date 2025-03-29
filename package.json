@@ -10,10 +10,12 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@vuestic/nuxt": "^1.0.21",
     "lucide-vue-next": "^0.454.0",
     "nuxt": "^3.13.2",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "vuestic-ui": "^1.10.3"
   },
   "devDependencies": {
     "@nuxtjs/style-resources": "^1.2.2",

@@ -1,51 +1,69 @@
 <template>
     <div
-        class="card"
+        class="va-card va-card--outlined page-config-example__card"
     >
-        <div class="input-area">
-            <p class="form-name">Title</p>
-            <input
-            v-model="editTodo.title"
-            class="title"
-            placeholder="タイトルを入力してください。"
+        <div
+            class="va-card__content"
         >
-        </div>
-        <div class="input-area">
-            <p class="form-name">Description</p>
-            <textarea
-                v-model="editTodo.description"
-                class="description"
-                placeholder="詳細を記入してください。"
-            ></textarea>
-        </div>
-        <div class="input-area">
-            <p class="form-name">Limit Date</p>
-            <input
-                type="date"
-                class="deadLine"
-                v-model="editTodo.deadLine"
+            <VaForm
+                class="mb-2 flex flex-col gap-2"
+                tag="form"
+                @submit.prevent="saveTodo"
             >
+                <VaInput
+                    v-model="editTodo.title"
+                    label="タイトル"
+                    class="m-10"
+                    placeholder="タイトルを入力してください"
+                />
+
+                <VaTextarea
+                    v-model="editTodo.description"
+                    label="詳細"
+                    class="m-10"
+                    placeholder="TODOの詳細を入力してください"
+                    minRows="5"
+                    maxRows="10"
+                />
+
+                <VaDateInput
+                    v-model="displayDate"
+                    label="期限"
+                    class="m-10"
+                    placeholder="期限を入力してください。"
+                    @update:modelValue="updateDate"
+                />
+
+                <VaSelect
+                    v-model="displayStatus"
+                    class="m-10"
+                    label="ステータス"
+                    :options="statuses"
+                    track-by="code"
+                    text-by="label"
+                    @update:modelValue="updateStatus"
+                />
+
+                <div
+                    class="va-text-right"
+                >
+                    <VaButton
+                        @click="saveTodo"
+                        class="m-10"
+                    >
+                        更新
+                    </VaButton>
+
+                    <VaButton
+                        color="secondary"
+                        @click="clickCancelButton"
+                        class="m-10"
+                    >
+                        キャンセル
+                    </VaButton>
+                </div>
+            </VaForm>
         </div>
-        <div class="input-area">
-            <label>ステータス:</label>
-            <select v-model="editTodo.status">
-                <option value="0">未完了</option>
-                <option value="1">完了</option>
-            </select>
-        </div>
-        <div class="buttons mb-10">
-            <normal-button
-                class="mr-10"
-                buttonName="Save"
-                @click="saveTodo"
-            >
-            </normal-button>
-            <sub-button
-                buttonName="Cancel"
-                @click="clickCancelButton">
-            </sub-button>
-        </div>
-        
     </div>
 </template>
 
@@ -54,6 +72,9 @@ import type { Todo } from '~/types/Todo';
 import { useRouter } from 'vue-router'; 
 import { GetTodo } from '~/src/UseCase/GetTodo';
 import { UpdateTodo } from '~/src/UseCase/UpdateTodo';
+import { GetStatuses } from '~/src/UseCase/GetStatsues';
+import type { Status } from '~/types/Status';
+import { useUtils } from '~/composables/Util';
 
 const router = useRouter();
 const route = useRoute();
@@ -61,12 +82,30 @@ const id: string = String(route.params.id);
 const updateTodoUseCase = new UpdateTodo();
 const getTodoUseCase = new GetTodo();
 
-let editTodo: Todo = {
+let editTodo: Ref<Todo> = ref({
     id: '',
     title: '',
     description: '',
     deadLine: '',
-    status: '0',
+    status: '',
+});
+
+const { getFormattedDate, getDateFromDateString } = useUtils();
+const displayDate: ComputedRef<Date> = computed(() => {
+    return getDateFromDateString(editTodo.value.deadLine);
+});
+const updateDate = (date: Date) => {
+    editTodo.value.deadLine = getFormattedDate(date);
+};
+
+const getStatusUseCase = new GetStatuses();
+const statuses: Array<Status> = getStatusUseCase.getStatuses();
+const displayStatus: ComputedRef<Status> = computed(() => {
+    return statuses.find((status) => status.code === editTodo.value.status);
+});
+const updateStatus = (status: Status) => {
+    editTodo.value.status = status.code;
+    
 };
 
 onMounted(() => {
@@ -74,12 +113,12 @@ onMounted(() => {
     if(result === false) {
         //TODO エラーハンドリングをどうするか？
     }else {
-        editTodo = result;
+        editTodo.value = result;
     }
 });
 
 function saveTodo(){
-    updateTodoUseCase.editTodo(editTodo);
+    updateTodoUseCase.editTodo(editTodo.value);
     router.push('/');
 }
 
